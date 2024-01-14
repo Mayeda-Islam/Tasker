@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AddTaskModal = ({ onSave, taskToUpdate }) => {
+const AddTaskModal = ({ onSave, taskToUpdate, OnClose }) => {
   const [isAdd, setIsAdd] = useState(Object.is(taskToUpdate, null));
   const [task, setTask] = useState(
     taskToUpdate || {
@@ -39,7 +39,7 @@ const AddTaskModal = ({ onSave, taskToUpdate }) => {
                 type="text"
                 name="title"
                 id="title"
-                value={task.value}
+                value={task.title}
                 onChange={handleChange}
                 required
               />
@@ -99,6 +99,12 @@ const AddTaskModal = ({ onSave, taskToUpdate }) => {
               className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
             >
               save
+            </button>
+            <button
+              onClick={OnClose}
+              className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
+            >
+              Close
             </button>
           </div>
         </div>

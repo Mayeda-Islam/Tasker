@@ -41,10 +41,20 @@ const TaskBoard = () => {
     setShowAddModal(true);
   };
 
+  //   close modal button
+  const handleOnClose = () => {
+    setTaskToUpdate(false);
+    setShowAddModal(null);
+  };
+
   return (
     <section className="mb-20 " id="tasks">
       {showAddModal && (
-        <AddTaskModal onSave={handleTaskAdd} taskToUpdate={taskToUpdate} />
+        <AddTaskModal
+          onSave={handleTaskAdd}
+          taskToUpdate={taskToUpdate}
+          OnClose={handleOnClose}
+        />
       )}
       <div className="container">
         <div className="p-2 flex justify-end">
