@@ -17,6 +17,7 @@ const TaskBoard = () => {
   const [tasks, setTasks] = useState([defaultTask]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [taskToUpdate, setTaskToUpdate] = useState(null);
+  const [favorite, setFavorite] = useState(false);
   // add neew task
   const handleTaskAdd = (newTask, isAdd) => {
     if (isAdd) {
@@ -47,6 +48,25 @@ const TaskBoard = () => {
     setShowAddModal(null);
   };
 
+  //   task delete
+  const handleDelete = (deletedTask) => {
+    const remainingTask = tasks.filter((task) => task.id !== deletedTask.id);
+    setTasks(remainingTask);
+  };
+
+  //delete all
+  const handleAllDelete = () => {
+    setTasks([]);
+  };
+
+  //toggle favorite to unfavorite
+  const handleToggleFavorite = (taskId) => {
+    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    const newTask = [...tasks];
+    newTask[taskIndex].isFavorite = !newTask[taskIndex].isFavorite;
+    setFavorite(newTask);
+  };
+
   return (
     <section className="mb-20 " id="tasks">
       {showAddModal && (
@@ -63,8 +83,16 @@ const TaskBoard = () => {
         </div>
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
           {/* task actions */}
-          <TaskActions addOnClick={() => setShowAddModal(!showAddModal)} />
-          <TaskList tasks={tasks} onEdit={handleEditTask} />
+          <TaskActions
+            addOnClick={() => setShowAddModal(!showAddModal)}
+            handleAllDelete={handleAllDelete}
+          />
+          <TaskList
+            tasks={tasks}
+            onEdit={handleEditTask}
+            onDelete={handleDelete}
+            onFavorite={handleToggleFavorite}
+          />
         </div>
       </div>
     </section>
